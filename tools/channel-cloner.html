@@ -1,0 +1,10 @@
+document.getElementById('cloneChannel').addEventListener('click', () => {
+  const channelName = document.getElementById('channelName').value;
+  const channelType = document.getElementById('channelType').value;
+  if (!channelName || !channelType) return alert('Please provide both name and type.');
+  const channelData = {
+    name: channelName,
+    type: channelType
+  };
+  document.getElementById('channelOutput').textContent = JSON.stringify(channelData, null, 2);
+});
