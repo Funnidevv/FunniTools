@@ -1,11 +1,12 @@
 # CODE IS OPEN SOURCE!
 
-Don't Worry, If You Think The Website Is Malware Just Check Through The Code And Verify.
-If You Do Use ANY Code, Please Give Us Credits! Worked Realllly Hard On It.
-Enjoy The Discord Tool! Please Don't Abuse Anything By The Way, It Could Lead To A RPC
-Timeout On Discord, Basically You Can't Do Anything On Discord When RPC "Timed Out/Banned"
+Don't worry. If you think the website is malware, just check through the code and verify.  
+If you do use any code, please give us credit! We worked really hard on it.  
+Enjoy the Discord tool! Please don't abuse anything, as it could lead to an RPC timeout on Discord. Basically, you can't do anything on Discord when the RPC times out or gets banned.
 
 # DiscordTool Rules:
-1. No Abusing The Tools
-2. Please Credit Us If Using ANY Code
-3. Don't Just Completely Steal The Website
+1. No abusing the tools  
+2. Please credit us if using any code  
+3. Don't just completely steal the website
+
+Thanks for using our tool!
