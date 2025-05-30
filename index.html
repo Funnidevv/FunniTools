@@ -11,12 +11,6 @@
     body {
       font-family: 'Inter', sans-serif;
     }
-    .fade-enter-active, .fade-leave-active {
-      transition: opacity 0.3s ease;
-    }
-    .fade-enter, .fade-leave-to {
-      opacity: 0;
-    }
   </style>
 </head>
 <body class="bg-gray-900 text-white overflow-hidden" x-data="{ tool: 'home' }">
@@ -39,16 +33,16 @@
       <div class="text-sm text-gray-400">© 2025 DiscordTools</div>
     </div>
 
-    <div class="flex-1 p-8 overflow-y-auto transition-all duration-500" :class="{'fade-enter': tool !== current, 'fade-enter-active': true}" x-init="current = tool" x-effect="current = tool">
+    <div class="flex-1 p-8 overflow-y-auto">
       <template x-if="tool === 'home'">
-        <div class="text-center">
+        <div x-transition class="text-center">
           <h2 class="text-3xl font-bold mb-2">Welcome to Discord Tools</h2>
           <p class="text-gray-400">Choose a tool from the sidebar to get started.</p>
         </div>
       </template>
 
       <template x-if="tool === 'webhook'">
-        <div>
+        <div x-transition>
           <h2 class="text-2xl font-semibold mb-4">Webhook Sender</h2>
           <input type="text" placeholder="Webhook URL" class="w-full p-2 mb-2 bg-gray-700 rounded"/>
           <textarea placeholder="Message Content" class="w-full p-2 mb-2 bg-gray-700 rounded"></textarea>
@@ -57,7 +51,7 @@
       </template>
 
       <template x-if="tool === 'embed'">
-        <div>
+        <div x-transition>
           <h2 class="text-2xl font-semibold mb-4">Embed Builder</h2>
           <input type="text" placeholder="Title" class="w-full p-2 mb-2 bg-gray-700 rounded"/>
           <textarea placeholder="Description" class="w-full p-2 mb-2 bg-gray-700 rounded"></textarea>
@@ -66,7 +60,7 @@
       </template>
 
       <template x-if="tool === 'roles'">
-        <div>
+        <div x-transition>
           <h2 class="text-2xl font-semibold mb-4">Role Manager</h2>
           <input type="text" placeholder="Role Name" class="w-full p-2 mb-2 bg-gray-700 rounded"/>
           <button class="bg-yellow-600 px-4 py-2 rounded hover:bg-yellow-700">Create Role</button>
@@ -74,7 +68,7 @@
       </template>
 
       <template x-if="tool === 'perms'">
-        <div>
+        <div x-transition>
           <h2 class="text-2xl font-semibold mb-4">Permission Calculator</h2>
           <input type="text" placeholder="Permission Integer" class="w-full p-2 mb-2 bg-gray-700 rounded"/>
           <button class="bg-pink-600 px-4 py-2 rounded hover:bg-pink-700">Calculate</button>
@@ -82,7 +76,7 @@
       </template>
 
       <template x-if="tool === 'clone'">
-        <div>
+        <div x-transition>
           <h2 class="text-2xl font-semibold mb-4">Channel Cloner</h2>
           <input type="text" placeholder="Channel ID" class="w-full p-2 mb-2 bg-gray-700 rounded"/>
           <button class="bg-blue-600 px-4 py-2 rounded hover:bg-blue-700">Clone Channel</button>
@@ -90,7 +84,7 @@
       </template>
 
       <template x-if="tool === 'emoji'">
-        <div>
+        <div x-transition>
           <h2 class="text-2xl font-semibold mb-4">Emoji Uploader</h2>
           <input type="file" class="w-full p-2 mb-2 bg-gray-700 rounded"/>
           <input type="text" placeholder="Emoji Name" class="w-full p-2 mb-2 bg-gray-700 rounded"/>
@@ -99,7 +93,7 @@
       </template>
 
       <template x-if="tool === 'insights'">
-        <div>
+        <div x-transition>
           <h2 class="text-2xl font-semibold mb-4">Server Insights</h2>
           <p class="text-gray-400">Coming soon with real-time Discord server stats!</p>
         </div>
