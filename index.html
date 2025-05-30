@@ -3,23 +3,22 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Discord Tools Suite</title>
+  <title>My Website</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
     body {
       margin: 0;
       padding: 0;
-      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
-      overflow: hidden;
-      color: white;
-      font-family: sans-serif;
+      font-family: 'Segoe UI', sans-serif;
     }
+
     #stars, #stars2, #stars3 {
       position: absolute;
       width: 100%;
       height: 100%;
-      display: block;
+      background: transparent;
     }
+
     #stars:after, #stars2:after, #stars3:after {
       content: " ";
       position: absolute;
@@ -27,146 +26,97 @@
       width: 100%;
       height: 100%;
     }
+
     #stars {
-      background: transparent;
       box-shadow: 0 0 1px white;
       animation: animStar 50s linear infinite;
     }
+
     #stars2 {
-      background: transparent;
       box-shadow: 0 0 2px white;
       animation: animStar 100s linear infinite;
     }
+
     #stars3 {
-      background: transparent;
       box-shadow: 0 0 3px white;
       animation: animStar 150s linear infinite;
     }
+
     @keyframes animStar {
       from { transform: translateY(0px); }
       to { transform: translateY(-2000px); }
     }
-    .tab-content {
-      display: none;
-    }
-    .tab-content.active {
-      display: block;
-    }
   </style>
 </head>
-<body>
-  <div id="stars"></div>
-  <div id="stars2"></div>
-  <div id="stars3"></div>
-
-  <div class="relative z-10 min-h-screen flex">
-    <nav class="w-64 bg-gray-800 p-4">
-      <h2 class="text-2xl font-bold mb-4">Discord Tools</h2>
-      <ul>
-        <li><button class="tab-button w-full text-left mb-2" data-tab="webhook">Webhook Sender</button></li>
-        <li><button class="tab-button w-full text-left mb-2" data-tab="embed">Embed Builder</button></li>
-        <li><button class="tab-button w-full text-left mb-2" data-tab="role">Role Manager</button></li>
-        <li><button class="tab-button w-full text-left mb-2" data-tab="permissions">Permission Calculator</button></li>
-        <li><button class="tab-button w-full text-left mb-2" data-tab="channel">Channel Cloner</button></li>
-        <li><button class="tab-button w-full text-left mb-2" data-tab="emoji">Emoji Uploader</button></li>
-        <li><button class="tab-button w-full text-left mb-2" data-tab="insights">Server Insights</button></li>
-      </ul>
-    </nav>
-
-    <main class="flex-1 p-6">
-      <section id="webhook" class="tab-content active">
-        <h3 class="text-xl font-semibold mb-2">Webhook Sender</h3>
-        <input id="webhookUrl" type="text" placeholder="Webhook URL" class="w-full mb-2 p-2 text-black" />
-        <textarea id="webhookMessage" placeholder="Message Content" class="w-full mb-2 p-2 text-black"></textarea>
-        <button id="sendWebhook" class="bg-blue-600 px-4 py-2 rounded">Send</button>
-      </section>
-
-      <section id="embed" class="tab-content">
-        <h3 class="text-xl font-semibold mb-2">Embed Builder</h3>
-        <input id="embedWebhookUrl" type="text" placeholder="Webhook URL" class="w-full mb-2 p-2 text-black" />
-        <input id="embedTitle" type="text" placeholder="Embed Title" class="w-full mb-2 p-2 text-black" />
-        <textarea id="embedDescription" placeholder="Embed Description" class="w-full mb-2 p-2 text-black"></textarea>
-        <button id="sendEmbed" class="bg-blue-600 px-4 py-2 rounded">Send Embed</button>
-      </section>
-
-      <section id="role" class="tab-content">
-        <h3 class="text-xl font-semibold mb-2">Role Manager</h3>
-        <input id="roleName" type="text" placeholder="Role Name" class="w-full mb-2 p-2 text-black" />
-        <input id="roleColor" type="text" placeholder="Role Color (Hex)" class="w-full mb-2 p-2 text-black" />
-        <button id="generateRole" class="bg-blue-600 px-4 py-2 rounded">Generate</button>
-        <pre id="roleOutput" class="mt-2 bg-gray-800 p-2 rounded"></pre>
-      </section>
-
-      <section id="permissions" class="tab-content">
-        <h3 class="text-xl font-semibold mb-2">Permission Calculator</h3>
-        <div class="grid grid-cols-2 gap-2 mb-2">
-          <label><input type="checkbox" id="perm_ADMINISTRATOR" /> Administrator</label>
-          <label><input type="checkbox" id="perm_MANAGE_CHANNELS" /> Manage Channels</label>
-          <label><input type="checkbox" id="perm_MANAGE_GUILD" /> Manage Guild</label>
-          <label><input type="checkbox" id="perm_VIEW_AUDIT_LOG" /> View Audit Log</label>
-          <label><input type="checkbox" id="perm_VIEW_CHANNEL" /> View Channel</label>
-          <label><input type="checkbox" id="perm_SEND_MESSAGES" /> Send Messages</label>
-          <label><input type="checkbox" id="perm_MANAGE_MESSAGES" /> Manage Messages</label>
-          <label><input type="checkbox" id="perm_CONNECT" /> Connect</label>
-          <label><input type="checkbox" id="perm_SPEAK" /> Speak</label>
-        </div>
-        <button id="calculatePerms" class="bg-blue-600 px-4 py-2 rounded">Calculate</button>
-        <pre id="permOutput" class="mt-2 bg-gray-800 p-2 rounded"></pre>
-      </section>
-
-      <section id="channel" class="tab-content">
-        <h3 class="text-xl font-semibold mb-2">Channel Cloner</h3>
-        <input id="channelName" type="text" placeholder="Channel Name" class="w-full mb-2 p-2 text-black" />
-        <select id="channelType" class="w-full mb-2 p-2 text-black">
-          <option value="text">Text</option>
-          <option value="voice">Voice</option>
-        </select>
-        <button id="cloneChannel" class="bg-blue-600 px-4 py-2 rounded">Clone</button>
-        <pre id="channelOutput" class="mt-2 bg-gray-800 p-2 rounded"></pre>
-      </section>
-
-      <section id="emoji" class="tab-content">
-        <h3 class="text-xl font-semibold mb-2">Emoji Uploader</h3>
-        <input id="emojiName" type="text" placeholder="Emoji Name" class="w-full mb-2 p-2 text-black" />
-        <input id="emojiFile" type="file" accept="image/*" class="w-full mb-2 p-2 text-black" />
-        <button id="uploadEmoji" class="bg-blue-600 px-4 py-2 rounded">Upload</button>
-        <pre id="emojiOutput" class="mt-2 bg-gray-800 p-2 rounded"></pre>
-      </section>
-
-      <section id="insights" class="tab-content">
-        <h3 class="text-xl font-semibold mb-2">Server Insights</h3>
-        <button id="loadInsights" class="bg-blue-600 px-4 py-2 rounded">Load Insights</button>
-        <pre id="insightsOutput" class="mt-2 bg-gray-800 p-2 rounded"></pre>
-      </section>
-    </main>
-  </div>
-
+<body class="bg-gray-900 text-white relative min-h-screen">
   <script>
-    const tabs = document.querySelectorAll('.tab-button');
-    const contents = document.querySelectorAll('.tab-content');
-    tabs.forEach(tab => {
-      tab.addEventListener('click', () => {
-        contents.forEach(c => c.classList.remove('active'));
-        document.getElementById(tab.getAttribute('data-tab')).classList.add('active');
-      });
-    });
+    const isDown = true; // Toggle this to true for maintenance mode
 
-    document.getElementById('sendWebhook').addEventListener('click', async () => {
-      const url = document.getElementById('webhookUrl').value;
-      const content = document.getElementById('webhookMessage').value;
-      if (!url || !content) return alert('Please provide both URL and message.');
-      try {
-        await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ content })
-        });
-        alert('Message sent!');
-      } catch (error) {
-        alert('Failed to send message.');
+    window.addEventListener('DOMContentLoaded', () => {
+      const maintenance = document.getElementById('maintenance');
+      const mainContent = document.getElementById('main-site');
+
+      if (isDown) {
+        maintenance.style.display = 'flex';
+        mainContent.style.display = 'none';
+      } else {
+        maintenance.style.display = 'none';
+        mainContent.style.display = 'block';
       }
     });
+  </script>
 
+  <div id="maintenance" class="hidden fixed inset-0 flex-col items-center justify-center text-center z-50">
+    <div id="stars"></div>
+    <div id="stars2"></div>
+    <div id="stars3"></div>
+    <div class="relative z-10">
+      <h1 class="text-6xl font-bold mb-4">🚧 Down for Maintenance</h1>
+      <p class="text-2xl">We're currently updating the site. Please check back soon.</p>
+    </div>
+  </div>
 
-::contentReference[oaicite:27]{index=27}
- 
+  <div id="main-site" class="hidden">
+    <header class="bg-gray-800 p-6 shadow-md">
+      <div class="max-w-7xl mx-auto flex items-center justify-between">
+        <h1 class="text-3xl font-bold text-white">My Cool Site</h1>
+        <nav class="space-x-6 text-lg">
+          <a href="#" class="hover:text-blue-400">Home</a>
+          <a href="#" class="hover:text-blue-400">Tools</a>
+          <a href="#" class="hover:text-blue-400">Discord</a>
+          <a href="#" class="hover:text-blue-400">About</a>
+        </nav>
+      </div>
+    </header>
+
+    <main class="max-w-5xl mx-auto p-8 space-y-12">
+      <section class="text-center">
+        <h2 class="text-4xl font-bold mb-4">Welcome to the Ultimate Tool Hub</h2>
+        <p class="text-lg text-gray-300">All your Discord and web tools in one place.</p>
+      </section>
+
+      <section class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition">
+          <h3 class="text-xl font-semibold mb-2">Token Generator</h3>
+          <p class="text-gray-300">Generate Discord tokens for testing environments.</p>
+          <button class="mt-4 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded">Launch</button>
+        </div>
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition">
+          <h3 class="text-xl font-semibold mb-2">Webhook Spammer</h3>
+          <p class="text-gray-300">Send automated messages to Discord webhooks.</p>
+          <button class="mt-4 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded">Launch</button>
+        </div>
+        <div class="bg-gray-800 p-6 rounded-lg shadow-lg hover:shadow-xl transition">
+          <h3 class="text-xl font-semibold mb-2">Username Sniper</h3>
+          <p class="text-gray-300">Monitor and snipe rare usernames instantly.</p>
+          <button class="mt-4 bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded">Launch</button>
+        </div>
+      </section>
+    </main>
+
+    <footer class="bg-gray-800 mt-16 py-6 text-center text-gray-400 text-sm">
+      &copy; 2025 My Cool Site — All rights reserved.
+    </footer>
+  </div>
+</body>
+</html>
