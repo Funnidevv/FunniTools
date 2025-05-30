@@ -1,0 +1,9 @@
+document.getElementById('loadInsights').addEventListener('click', () => {
+  const insights = {
+    memberCount: 150,
+    onlineMembers: 120,
+    channels: 25,
+    roles: 10
+  };
+  document.getElementById('insightsOutput').textContent = JSON.stringify(insights, null, 2);
+});
