@@ -3,88 +3,159 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Webhook Tools</title>
+  <title>Discord Webhook Tools</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-    input, textarea { background-color: #1f2937; color: white; }
+    body { font-family: 'Segoe UI', sans-serif; }
+    input, textarea, select { background-color: #1f2937; color: white; border: none; }
     ::placeholder { color: #9ca3af; }
+    .tool-section { display: none; }
   </style>
 </head>
 <body class="bg-gray-900 text-white">
-  <div class="flex min-h-screen">
-    <!-- Sidebar -->
-    <aside class="w-64 bg-gray-800 p-4 flex flex-col space-y-4">
-      <h1 class="text-2xl font-bold mb-6">Webhook Tools</h1>
-      <nav class="flex flex-col space-y-2">
-        <button onclick="showPage('webhook')" class="text-left hover:bg-gray-700 p-2 rounded">Webhook Sender</button>
-        <button onclick="alert('Coming soon!')" class="text-left hover:bg-gray-700 p-2 rounded">Embed Builder</button>
-        <button onclick="alert('Coming soon!')" class="text-left hover:bg-gray-700 p-2 rounded">Message Preview</button>
-      </nav>
-    </aside>
+<div class="flex min-h-screen">
+  <!-- Sidebar -->
+  <aside class="w-64 bg-gray-800 p-4 flex flex-col space-y-4">
+    <h1 class="text-2xl font-bold mb-6">Discord Tools</h1>
+    <nav class="flex flex-col space-y-2">
+      <button onclick="showTool('webhook')" class="text-left hover:bg-gray-700 p-2 rounded">Webhook Sender</button>
+      <button onclick="showTool('embed')" class="text-left hover:bg-gray-700 p-2 rounded">Embed Builder</button>
+      <button onclick="showTool('preview')" class="text-left hover:bg-gray-700 p-2 rounded">Message Preview</button>
+      <button onclick="showTool('markdown')" class="text-left hover:bg-gray-700 p-2 rounded">Markdown Helper</button>
+      <button onclick="showTool('timestamp')" class="text-left hover:bg-gray-700 p-2 rounded">Timestamp Generator</button>
+    </nav>
+  </aside>
 
-    <!-- Main content -->
-    <main class="flex-1 p-6">
-      <!-- Webhook Sender -->
-      <section id="webhook" class="space-y-4">
-        <h2 class="text-xl font-bold">Webhook Sender</h2>
+  <!-- Main -->
+  <main class="flex-1 p-6 space-y-8">
 
-        <input id="webhookUrl" type="text" placeholder="Webhook URL" class="w-full p-2 rounded" />
-        <input id="username" type="text" placeholder="Username (optional)" class="w-full p-2 rounded" />
-        <textarea id="message" placeholder="Message" class="w-full p-2 rounded h-32"></textarea>
-        <input id="avatar" type="text" placeholder="Avatar URL (optional)" class="w-full p-2 rounded" />
-        
-        <button onclick="sendWebhook()" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded">
-          Send Message
-        </button>
+    <!-- Webhook Sender -->
+    <section id="webhook" class="tool-section space-y-4">
+      <h2 class="text-xl font-bold">Webhook Sender</h2>
+      <input id="webhookUrl" type="text" placeholder="Webhook URL" class="w-full p-2 rounded" />
+      <input id="username" type="text" placeholder="Username (optional)" class="w-full p-2 rounded" />
+      <textarea id="message" placeholder="Message" class="w-full p-2 rounded h-32"></textarea>
+      <input id="avatar" type="text" placeholder="Avatar URL (optional)" class="w-full p-2 rounded" />
+      <button onclick="sendWebhook()" class="bg-blue-600 hover:bg-blue-700 px-4 py-2 rounded">Send Message</button>
+      <div id="status" class="mt-2 text-sm text-green-400"></div>
+    </section>
 
-        <div id="status" class="mt-2 text-sm text-green-400"></div>
-      </section>
-    </main>
-  </div>
+    <!-- Embed Builder -->
+    <section id="embed" class="tool-section space-y-4">
+      <h2 class="text-xl font-bold">Embed Builder</h2>
+      <input id="embedTitle" type="text" placeholder="Title" class="w-full p-2 rounded" />
+      <textarea id="embedDescription" placeholder="Description" class="w-full p-2 rounded h-24"></textarea>
+      <input id="embedColor" type="color" value="#5865F2" class="w-32 p-2 rounded" />
+      <button onclick="copyEmbed()" class="bg-green-600 hover:bg-green-700 px-4 py-2 rounded">Copy JSON</button>
+      <pre id="embedOutput" class="bg-gray-800 p-4 rounded text-sm"></pre>
+    </section>
 
-  <!-- JavaScript -->
-  <script>
-    function showPage(page) {
-      document.getElementById("webhook").style.display = page === 'webhook' ? 'block' : 'none';
+    <!-- Message Preview -->
+    <section id="preview" class="tool-section space-y-4">
+      <h2 class="text-xl font-bold">Message Preview</h2>
+      <textarea id="previewInput" placeholder="Type a message with markdown..." class="w-full p-2 rounded h-32"></textarea>
+      <div class="border-t border-gray-700 pt-4">
+        <h3 class="text-lg mb-2">Preview:</h3>
+        <div id="previewOutput" class="bg-gray-800 p-4 rounded"></div>
+      </div>
+    </section>
+
+    <!-- Markdown Helper -->
+    <section id="markdown" class="tool-section space-y-4">
+      <h2 class="text-xl font-bold">Markdown Helper</h2>
+      <ul class="list-disc ml-6 space-y-1">
+        <li><code>**bold**</code> → <strong>bold</strong></li>
+        <li><code>*italic*</code> → <em>italic</em></li>
+        <li><code>__underline__</code> → <u>underline</u></li>
+        <li><code>~~strike~~</code> → <s>strike</s></li>
+        <li><code>`code`</code> → <code>code</code></li>
+        <li><code>```code block```</code> → multiline code block</li>
+      </ul>
+    </section>
+
+    <!-- Timestamp Generator -->
+    <section id="timestamp" class="tool-section space-y-4">
+      <h2 class="text-xl font-bold">Timestamp Generator</h2>
+      <input type="datetime-local" id="timestampInput" class="p-2 rounded bg-gray-700" />
+      <button onclick="generateTimestamp()" class="bg-yellow-600 hover:bg-yellow-700 px-4 py-2 rounded">Generate</button>
+      <div class="mt-2">
+        <code id="timestampOutput" class="text-green-400"></code>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<!-- Scripts -->
+<script>
+  function showTool(toolId) {
+    document.querySelectorAll('.tool-section').forEach(el => el.style.display = 'none');
+    document.getElementById(toolId).style.display = 'block';
+  }
+
+  // Webhook Sender
+  async function sendWebhook() {
+    const url = document.getElementById('webhookUrl').value;
+    const content = document.getElementById('message').value;
+    const username = document.getElementById('username').value;
+    const avatar = document.getElementById('avatar').value;
+    const payload = {
+      content: content,
+      ...(username && { username }),
+      ...(avatar && { avatar_url: avatar })
+    };
+
+    try {
+      const res = await fetch(url, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      document.getElementById('status').textContent = res.ok ? "✅ Sent!" : "❌ Error!";
+    } catch {
+      document.getElementById('status').textContent = "❌ Failed to send.";
     }
+  }
 
-    async function sendWebhook() {
-      const url = document.getElementById('webhookUrl').value;
-      const content = document.getElementById('message').value;
-      const username = document.getElementById('username').value;
-      const avatar = document.getElementById('avatar').value;
+  // Embed Builder
+  function copyEmbed() {
+    const title = document.getElementById('embedTitle').value;
+    const description = document.getElementById('embedDescription').value;
+    const color = parseInt(document.getElementById('embedColor').value.slice(1), 16);
+    const embed = {
+      embeds: [{
+        title,
+        description,
+        color
+      }]
+    };
+    const json = JSON.stringify(embed, null, 2);
+    document.getElementById('embedOutput').textContent = json;
+    navigator.clipboard.writeText(json);
+  }
 
-      if (!url || !content) {
-        alert("Webhook URL and message are required.");
-        return;
-      }
+  // Message Preview
+  document.getElementById('previewInput').addEventListener('input', function () {
+    let text = this.value
+      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+      .replace(/\*(.*?)\*/g, '<em>$1</em>')
+      .replace(/__(.*?)__/g, '<u>$1</u>')
+      .replace(/~~(.*?)~~/g, '<s>$1</s>')
+      .replace(/`([^`]+)`/g, '<code>$1</code>');
+    document.getElementById('previewOutput').innerHTML = text;
+  });
 
-      const payload = {
-        content: content,
-        ...(username && { username }),
-        ...(avatar && { avatar_url: avatar })
-      };
+  // Timestamp Generator
+  function generateTimestamp() {
+    const datetime = document.getElementById('timestampInput').value;
+    const unix = Math.floor(new Date(datetime).getTime() / 1000);
+    document.getElementById('timestampOutput').textContent = `<t:${unix}>`;
+    navigator.clipboard.writeText(`<t:${unix}>`);
+  }
 
-      try {
-        const res = await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(payload)
-        });
-
-        if (res.ok) {
-          document.getElementById('status').textContent = "✅ Message sent!";
-        } else {
-          document.getElementById('status').textContent = "❌ Error: " + res.statusText;
-        }
-      } catch (err) {
-        document.getElementById('status').textContent = "❌ Network Error.";
-      }
-    }
-
-    // Show the default page
-    showPage('webhook');
-  </script>
+  // Load default view
+  showTool('webhook');
+</script>
 </body>
 </html>
