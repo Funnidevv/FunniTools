@@ -2,129 +2,153 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Discord Tools Suite</title>
   <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
   <style>
-    .hidden { display: none; }
-    .fade-in { animation: fadeIn 0.5s forwards; }
-    .fade-out { animation: fadeOut 0.5s forwards; }
-    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-    @keyframes fadeOut { from { opacity: 1; } to { opacity: 0; } }
+    body {
+      margin: 0;
+      padding: 0;
+      background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+      overflow: hidden;
+      color: white;
+      font-family: sans-serif;
+    }
+    #stars, #stars2, #stars3 {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      display: block;
+    }
+    #stars:after, #stars2:after, #stars3:after {
+      content: " ";
+      position: absolute;
+      top: 2000px;
+      width: 100%;
+      height: 100%;
+    }
+    #stars {
+      background: transparent;
+      box-shadow: 0 0 1px white;
+      animation: animStar 50s linear infinite;
+    }
+    #stars2 {
+      background: transparent;
+      box-shadow: 0 0 2px white;
+      animation: animStar 100s linear infinite;
+    }
+    #stars3 {
+      background: transparent;
+      box-shadow: 0 0 3px white;
+      animation: animStar 150s linear infinite;
+    }
+    @keyframes animStar {
+      from { transform: translateY(0px); }
+      to { transform: translateY(-2000px); }
+    }
+    .tab-content {
+      display: none;
+    }
+    .tab-content.active {
+      display: block;
+    }
   </style>
 </head>
-<body class="bg-gray-900 text-white min-h-screen flex">
-  <!-- Sidebar Navigation -->
-  <nav class="w-64 bg-gray-800 p-4">
-    <h2 class="text-2xl font-bold mb-4">Discord Tools</h2>
-    <ul>
-      <li><button class="nav-button w-full text-left mb-2" data-target="webhook">Webhook Sender</button></li>
-      <li><button class="nav-button w-full text-left mb-2" data-target="embed">Embed Builder</button></li>
-      <li><button class="nav-button w-full text-left mb-2" data-target="role">Role Manager</button></li>
-      <li><button class="nav-button w-full text-left mb-2" data-target="permissions">Permission Calculator</button></li>
-      <li><button class="nav-button w-full text-left mb-2" data-target="channel">Channel Cloner</button></li>
-      <li><button class="nav-button w-full text-left mb-2" data-target="emoji">Emoji Uploader</button></li>
-      <li><button class="nav-button w-full text-left mb-2" data-target="insights">Server Insights</button></li>
-    </ul>
-    <button id="toggleTheme" class="mt-4 w-full bg-gray-700 p-2 rounded">Toggle Theme</button>
-  </nav>
+<body>
+  <div id="stars"></div>
+  <div id="stars2"></div>
+  <div id="stars3"></div>
 
-  <!-- Main Content Area -->
-  <main class="flex-1 p-6">
-    <!-- Webhook Sender -->
-    <section id="webhook" class="tool-section">
-      <h3 class="text-xl font-semibold mb-2">Webhook Sender</h3>
-      <input id="webhookUrl" type="text" placeholder="Webhook URL" class="w-full mb-2 p-2 text-black" />
-      <textarea id="webhookMessage" placeholder="Message Content" class="w-full mb-2 p-2 text-black"></textarea>
-      <button id="sendWebhook" class="bg-blue-600 px-4 py-2 rounded">Send</button>
-    </section>
+  <div class="relative z-10 min-h-screen flex">
+    <nav class="w-64 bg-gray-800 p-4">
+      <h2 class="text-2xl font-bold mb-4">Discord Tools</h2>
+      <ul>
+        <li><button class="tab-button w-full text-left mb-2" data-tab="webhook">Webhook Sender</button></li>
+        <li><button class="tab-button w-full text-left mb-2" data-tab="embed">Embed Builder</button></li>
+        <li><button class="tab-button w-full text-left mb-2" data-tab="role">Role Manager</button></li>
+        <li><button class="tab-button w-full text-left mb-2" data-tab="permissions">Permission Calculator</button></li>
+        <li><button class="tab-button w-full text-left mb-2" data-tab="channel">Channel Cloner</button></li>
+        <li><button class="tab-button w-full text-left mb-2" data-tab="emoji">Emoji Uploader</button></li>
+        <li><button class="tab-button w-full text-left mb-2" data-tab="insights">Server Insights</button></li>
+      </ul>
+    </nav>
 
-    <!-- Embed Builder -->
-    <section id="embed" class="tool-section hidden">
-      <h3 class="text-xl font-semibold mb-2">Embed Builder</h3>
-      <input id="embedWebhookUrl" type="text" placeholder="Webhook URL" class="w-full mb-2 p-2 text-black" />
-      <input id="embedTitle" type="text" placeholder="Embed Title" class="w-full mb-2 p-2 text-black" />
-      <textarea id="embedDescription" placeholder="Embed Description" class="w-full mb-2 p-2 text-black"></textarea>
-      <button id="sendEmbed" class="bg-blue-600 px-4 py-2 rounded">Send Embed</button>
-    </section>
+    <main class="flex-1 p-6">
+      <section id="webhook" class="tab-content active">
+        <h3 class="text-xl font-semibold mb-2">Webhook Sender</h3>
+        <input id="webhookUrl" type="text" placeholder="Webhook URL" class="w-full mb-2 p-2 text-black" />
+        <textarea id="webhookMessage" placeholder="Message Content" class="w-full mb-2 p-2 text-black"></textarea>
+        <button id="sendWebhook" class="bg-blue-600 px-4 py-2 rounded">Send</button>
+      </section>
 
-    <!-- Role Manager -->
-    <section id="role" class="tool-section hidden">
-      <h3 class="text-xl font-semibold mb-2">Role Manager</h3>
-      <input id="roleName" type="text" placeholder="Role Name" class="w-full mb-2 p-2 text-black" />
-      <input id="roleColor" type="text" placeholder="Role Color (Hex)" class="w-full mb-2 p-2 text-black" />
-      <button id="generateRole" class="bg-blue-600 px-4 py-2 rounded">Generate</button>
-      <pre id="roleOutput" class="mt-2 bg-gray-800 p-2 rounded"></pre>
-    </section>
+      <section id="embed" class="tab-content">
+        <h3 class="text-xl font-semibold mb-2">Embed Builder</h3>
+        <input id="embedWebhookUrl" type="text" placeholder="Webhook URL" class="w-full mb-2 p-2 text-black" />
+        <input id="embedTitle" type="text" placeholder="Embed Title" class="w-full mb-2 p-2 text-black" />
+        <textarea id="embedDescription" placeholder="Embed Description" class="w-full mb-2 p-2 text-black"></textarea>
+        <button id="sendEmbed" class="bg-blue-600 px-4 py-2 rounded">Send Embed</button>
+      </section>
 
-    <!-- Permission Calculator -->
-    <section id="permissions" class="tool-section hidden">
-      <h3 class="text-xl font-semibold mb-2">Permission Calculator</h3>
-      <div class="grid grid-cols-2 gap-2 mb-2">
-        <label><input type="checkbox" id="perm_ADMINISTRATOR" /> Administrator</label>
-        <label><input type="checkbox" id="perm_MANAGE_CHANNELS" /> Manage Channels</label>
-        <label><input type="checkbox" id="perm_MANAGE_GUILD" /> Manage Guild</label>
-        <label><input type="checkbox" id="perm_VIEW_AUDIT_LOG" /> View Audit Log</label>
-        <label><input type="checkbox" id="perm_VIEW_CHANNEL" /> View Channel</label>
-        <label><input type="checkbox" id="perm_SEND_MESSAGES" /> Send Messages</label>
-        <label><input type="checkbox" id="perm_MANAGE_MESSAGES" /> Manage Messages</label>
-        <label><input type="checkbox" id="perm_CONNECT" /> Connect</label>
-        <label><input type="checkbox" id="perm_SPEAK" /> Speak</label>
-      </div>
-      <button id="calculatePerms" class="bg-blue-600 px-4 py-2 rounded">Calculate</button>
-      <pre id="permOutput" class="mt-2 bg-gray-800 p-2 rounded"></pre>
-    </section>
+      <section id="role" class="tab-content">
+        <h3 class="text-xl font-semibold mb-2">Role Manager</h3>
+        <input id="roleName" type="text" placeholder="Role Name" class="w-full mb-2 p-2 text-black" />
+        <input id="roleColor" type="text" placeholder="Role Color (Hex)" class="w-full mb-2 p-2 text-black" />
+        <button id="generateRole" class="bg-blue-600 px-4 py-2 rounded">Generate</button>
+        <pre id="roleOutput" class="mt-2 bg-gray-800 p-2 rounded"></pre>
+      </section>
 
-    <!-- Channel Cloner -->
-    <section id="channel" class="tool-section hidden">
-      <h3 class="text-xl font-semibold mb-2">Channel Cloner</h3>
-      <input id="channelName" type="text" placeholder="Channel Name" class="w-full mb-2 p-2 text-black" />
-      <select id="channelType" class="w-full mb-2 p-2 text-black">
-        <option value="text">Text</option>
-        <option value="voice">Voice</option>
-      </select>
-      <button id="cloneChannel" class="bg-blue-600 px-4 py-2 rounded">Clone</button>
-      <pre id="channelOutput" class="mt-2 bg-gray-800 p-2 rounded"></pre>
-    </section>
+      <section id="permissions" class="tab-content">
+        <h3 class="text-xl font-semibold mb-2">Permission Calculator</h3>
+        <div class="grid grid-cols-2 gap-2 mb-2">
+          <label><input type="checkbox" id="perm_ADMINISTRATOR" /> Administrator</label>
+          <label><input type="checkbox" id="perm_MANAGE_CHANNELS" /> Manage Channels</label>
+          <label><input type="checkbox" id="perm_MANAGE_GUILD" /> Manage Guild</label>
+          <label><input type="checkbox" id="perm_VIEW_AUDIT_LOG" /> View Audit Log</label>
+          <label><input type="checkbox" id="perm_VIEW_CHANNEL" /> View Channel</label>
+          <label><input type="checkbox" id="perm_SEND_MESSAGES" /> Send Messages</label>
+          <label><input type="checkbox" id="perm_MANAGE_MESSAGES" /> Manage Messages</label>
+          <label><input type="checkbox" id="perm_CONNECT" /> Connect</label>
+          <label><input type="checkbox" id="perm_SPEAK" /> Speak</label>
+        </div>
+        <button id="calculatePerms" class="bg-blue-600 px-4 py-2 rounded">Calculate</button>
+        <pre id="permOutput" class="mt-2 bg-gray-800 p-2 rounded"></pre>
+      </section>
 
-    <!-- Emoji Uploader -->
-    <section id="emoji" class="tool-section hidden">
-      <h3 class="text-xl font-semibold mb-2">Emoji Uploader</h3>
-      <input id="emojiName" type="text" placeholder="Emoji Name" class="w-full mb-2 p-2 text-black" />
-      <input id="emojiFile" type="file" accept="image/*" class="w-full mb-2 p-2 text-black" />
-      <button id="uploadEmoji" class="bg-blue-600 px-4 py-2 rounded">Upload</button>
-      <pre id="emojiOutput" class="mt-2 bg-gray-800 p-2 rounded"></pre>
-    </section>
+      <section id="channel" class="tab-content">
+        <h3 class="text-xl font-semibold mb-2">Channel Cloner</h3>
+        <input id="channelName" type="text" placeholder="Channel Name" class="w-full mb-2 p-2 text-black" />
+        <select id="channelType" class="w-full mb-2 p-2 text-black">
+          <option value="text">Text</option>
+          <option value="voice">Voice</option>
+        </select>
+        <button id="cloneChannel" class="bg-blue-600 px-4 py-2 rounded">Clone</button>
+        <pre id="channelOutput" class="mt-2 bg-gray-800 p-2 rounded"></pre>
+      </section>
 
-    <!-- Server Insights -->
-    <section id="insights" class="tool-section hidden">
-      <h3 class="text-xl font-semibold mb-2">Server Insights</h3>
-      <button id="loadInsights" class="bg-blue-600 px-4 py-2 rounded">Load Insights</button>
-      <pre id="insightsOutput" class="mt-2 bg-gray-800 p-2 rounded"></pre>
-    </section>
-  </main>
+      <section id="emoji" class="tab-content">
+        <h3 class="text-xl font-semibold mb-2">Emoji Uploader</h3>
+        <input id="emojiName" type="text" placeholder="Emoji Name" class="w-full mb-2 p-2 text-black" />
+        <input id="emojiFile" type="file" accept="image/*" class="w-full mb-2 p-2 text-black" />
+        <button id="uploadEmoji" class="bg-blue-600 px-4 py-2 rounded">Upload</button>
+        <pre id="emojiOutput" class="mt-2 bg-gray-800 p-2 rounded"></pre>
+      </section>
+
+      <section id="insights" class="tab-content">
+        <h3 class="text-xl font-semibold mb-2">Server Insights</h3>
+        <button id="loadInsights" class="bg-blue-600 px-4 py-2 rounded">Load Insights</button>
+        <pre id="insightsOutput" class="mt-2 bg-gray-800 p-2 rounded"></pre>
+      </section>
+    </main>
+  </div>
 
   <script>
-    const sections = document.querySelectorAll('.tool-section');
-    const navButtons = document.querySelectorAll('.nav-button');
-
-    navButtons.forEach(button => {
-      button.addEventListener('click', () => {
-        const targetId = button.getAttribute('data-target');
-        sections.forEach(section => {
-          if (section.id === targetId) {
-            section.classList.remove('hidden');
-            section.classList.add('fade-in');
-          } else {
-            section.classList.add('hidden');
-            section.classList.remove('fade-in');
-          }
-        });
+    const tabs = document.querySelectorAll('.tab-button');
+    const contents = document.querySelectorAll('.tab-content');
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        contents.forEach(c => c.classList.remove('active'));
+        document.getElementById(tab.getAttribute('data-tab')).classList.add('active');
       });
-    });
-
-    document.getElementById('toggleTheme').addEventListener('click', () => {
-      document.documentElement.classList.toggle('dark');
     });
 
     document.getElementById('sendWebhook').addEventListener('click', async () => {
@@ -143,31 +167,6 @@
       }
     });
 
-    document.getElementById('sendEmbed').addEventListener('click', async () => {
-      const url = document.getElementById('embedWebhookUrl').value;
-      const title = document.getElementById('embedTitle').value;
-      const description = document.getElementById('embedDescription').value;
-      if (!url || !title || !description) return alert('Please fill in all fields.');
-      const embed = {
-        title,
-        description,
-        color: 0x5865F2
-      };
-      try {
-        await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ embeds: [embed] })
-        });
-        alert('Embed sent!');
-      } catch (error) {
-        alert('Failed to send embed.');
-      }
-    });
 
-    document.getElementById('generateRole').addEventListener('click', () => {
-      const roleName = document.getElementById('roleName').value;
-      const roleColor = document.getElementById('roleColor').value;
-      if (!roleName || !roleColor) return alert('Please provide
-::contentReference[oaicite:0]{index=0}
+::contentReference[oaicite:27]{index=27}
  
